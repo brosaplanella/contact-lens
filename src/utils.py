@@ -15,10 +15,10 @@ def get_curing_time(solution, threshold=0.95):
         a = alpha[i, :]
         if np.max(a) < threshold:
             warnings.warn(
-                "The maximum degree of polimerisation in the solution is smaller than the threshould",
+                "The maximum degree of polimerisation in the solution is smaller than the threshold",
                 UserWarning,
             )
             t_c[i] = np.nan
         else:
-            t_c[i] = t[np.argmax(a > threshold)]
+            t_c[i] = np.interp(threshold, a, t)
     return t_c
