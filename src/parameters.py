@@ -3,11 +3,13 @@
 #
 import pybamm
 
+
 def R_p_Gao(alpha, I, T):
     R = 8.314
     E_R_p = pybamm.Parameter("Activation energy polimerisation [J.mol-1]")
     C0 = pybamm.Parameter("Polimerisation constant")
-    return C0 * pybamm.exp(- E_R_p / (R * T)) * (1 - alpha) * I ** (1/2)
+    return C0 * pybamm.exp(-E_R_p / (R * T)) * (1 - alpha) * I ** (1 / 2)
+
 
 def get_parameters(parameter_set="Gao2018"):
     """

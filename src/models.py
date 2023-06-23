@@ -43,7 +43,7 @@ class ContactLens(pybamm.models.base_model.BaseModel):
         ######################
         # Variables
         ######################
-        domains={"primary": "lens"}
+        domains = {"primary": "lens"}
         T = pybamm.Variable("Temperature [K]", domains=domains)
         I = pybamm.Variable("UV intensity [W.m-2]", domains=domains)
         alpha = pybamm.Variable("Degree of polimerisation", domains=domains)
@@ -74,8 +74,10 @@ class ContactLens(pybamm.models.base_model.BaseModel):
         self.initial_conditions = {T: T0, alpha: alpha0, I: I0}
 
         T_av = pybamm.Integral(T, self.z) / L
-        alpha_av = pybamm.Integral(alpha, self.z) / L 
+        alpha_av = pybamm.Integral(alpha, self.z) / L
         R_p_av = pybamm.Integral(R_p(alpha, I, T), self.z) / L
+        alpha_bottom = pybamm.BoundaryValue(alpha, "right")
+        alpha_top = pybamm.BoundaryValue(alpha, "left")
 
         ######################
         # (Some) variables
@@ -84,6 +86,8 @@ class ContactLens(pybamm.models.base_model.BaseModel):
             "Temperature [K]": T,
             "Averaged temperature [K]": T_av,
             "Degree of polimerisation": alpha,
+            "Top boundary degree of polimerisation": alpha_top,
+            "Bottom boundary degree of polimerisation": alpha_top,
             "UV intensity [W.m-2]": I,
             "Averaged degree of polimerisation": alpha_av,
             "Rate of polimerisation [s-1]": R_p(alpha, I, T),
@@ -91,6 +95,7 @@ class ContactLens(pybamm.models.base_model.BaseModel):
             "Time [s]": pybamm.t,
             "Time [min]": pybamm.t / 60,
             "z [m]": self.z,
+            "z [um]": self.z * 1e6,
         }
 
     @property
