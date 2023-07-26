@@ -6,13 +6,7 @@ from src import ContactLens, Simulation, get_parameters
 model = ContactLens()
 
 param = get_parameters()
-param2 = get_parameters()
-param2.update(
-    {
-        "Activation energy polimerisation [J.mol-1]": 0,
-        "Polimerisation constant": 1.304 * np.exp(-17792 / (8.314 * 353.15)),
-    }
-)
+param2 = get_parameters("Gao2018 isothermal")
 
 parameters = [param, param2]
 
