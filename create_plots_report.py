@@ -1,6 +1,7 @@
 import pybamm
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import join
 from src import ContactLens, Simulation, get_parameters
 
 # Assemble and solve the model
@@ -34,7 +35,7 @@ plot = pybamm.QuickPlot(
 
 plot.plot(0)
 
-plot.fig.savefig("averaged_variables.png", dpi=300)
+plot.fig.savefig(join("fig", "averaged_variables.png"), dpi=300)
 
 # Generate plot for spatially distributed quantities
 from  matplotlib.gridspec import GridSpec
@@ -72,4 +73,4 @@ for i in [6, 7]:
 
 fig.tight_layout()
 
-fig.savefig("spatially_distributed.png", dpi=300)
+fig.savefig(join("fig", "spatially_distributed.png"), dpi=300)

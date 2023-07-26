@@ -1,6 +1,7 @@
 import pybamm
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import join
 from src import ContactLens, Simulation, get_parameters
 
 model = ContactLens()
@@ -55,7 +56,7 @@ for val in time_array:
 images = images + images[::-1]
 
 # compile the images/plots to create a GIF
-with imageio.get_writer("my_gif.gif", mode="I", duration=10) as writer:
+with imageio.get_writer(join("fig", "my_gif.gif"), mode="I", duration=10) as writer:
     for image in images:
         print(image)
         writer.append_data(imageio.imread(image))
