@@ -14,7 +14,8 @@ class ContactLens(pybamm.models.base_model.BaseModel):
         rho = pybamm.Parameter("Density [kg.m-3]")
         c_p = pybamm.Parameter("Specific heat capacity [J.kg-1.K-1]")
         k_T = pybamm.Parameter("Thermal conductivity [W.m-1.K-1]")
-        beta = pybamm.Parameter("Enthalpy of polimerisation [J.m-3]")
+        DeltaH = pybamm.Parameter("Enthalpy of polimerisation [J.mol-1]")
+        c0 = pybamm.Parameter("Initial monomer concentration [mol.m-3]")
         I0 = pybamm.Parameter("UV boundary intensity [W.m-2]")
         T0 = pybamm.Parameter("Initial temperature [K]")
         T_amb = pybamm.Parameter("Ambient temperature [K]")
@@ -55,7 +56,7 @@ class ContactLens(pybamm.models.base_model.BaseModel):
         dTdt = (
             pybamm.div(k_T * pybamm.grad(T))
             + k_I(alpha, T) * I
-            + beta * R_p(alpha, I, T)
+            + DeltaH * c0 * R_p(alpha, I, T)
         ) / (rho * c_p)
         dalphadt = R_p(alpha, I, T)
         v = pybamm.PrimaryBroadcastToEdges(1, "lens")
